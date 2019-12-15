@@ -67,7 +67,7 @@ class TDMA{ //Tridiagonal matrix algorithm
 			f.insert(f.begin(), 0);
 			f.push_back(0);
 			Matrix val(f.size(),1);
-			val.setvalue(f);
+			val.substitute(f);
 			return val;
 		}
 };
