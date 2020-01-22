@@ -40,12 +40,12 @@ class TDMA{ //Tridiagonal matrix algorithm
 		std::vector<double> *c;
 		std::vector<double> *d;
 		double cstar(int i){
-			if(i == 1)return c->at(i)/b->at(i);
+			if(i == 0)return c->at(i)/b->at(i);
 			else return c->at(i)/(b->at(i)-a->at(i)*cstar(i-1));
 		}
 
 		double dstar(int i){
-			if(i == 1)return d->at(i)/b->at(i);
+			if(i == 0)return d->at(i)/b->at(i);
 			else return (d->at(i)-a->at(i)*dstar(i-1))/(b->at(i)-a->at(i)*cstar(i-1));
 		}
 
@@ -61,11 +61,9 @@ class TDMA{ //Tridiagonal matrix algorithm
 			d = &D;
 			std::vector<double> f;
 			f.push_back(dstar(d->size()-1));
-			for(int i = b->size()-2; i > 0; i--){
+			for(int i = b->size()-2; i >= 0; i--){
 				f.insert(f.begin(), dstar(i)-cstar(i)*f[0]);
 			}
-			f.insert(f.begin(), 0);
-			f.push_back(0);
 			Matrix val(f.size(),1);
 			val.substitute(f);
 			return val;
